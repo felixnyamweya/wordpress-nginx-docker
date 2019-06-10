@@ -1,4 +1,4 @@
-# mjstealey.com - an example deployment
+# An example deployment
 
 This example uses the default settings which is **STRONGLY** **DISCOURAGED** for real-world use. Once the documentation herein was completed this example was removed and the deployment was redone using better security principles.
 
@@ -14,7 +14,7 @@ This example uses the default settings which is **STRONGLY** **DISCOURAGED** for
   Release:	18.04
   Codename:	bionic
   ```
-- Domain name - example using **mjstealey.com** from [GoDaddy](https://www.godaddy.com)
+- Domain name - example using **example.com**
 - DNS registry - ensure the A record associates the IP address of your server to the Domain name
 - [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [Compose](https://docs.docker.com/compose/install/) installed on your server 
 
@@ -45,7 +45,7 @@ This example uses the default settings which is **STRONGLY** **DISCOURAGED** for
   OpenSSL version: OpenSSL 1.1.0f  25 May 2017
   ```
 
-## mjstealey.com
+## example.com
 
 The deployment is being performed by a standard Linux user (`demouser`) that is a member of the **docker** group.
 
@@ -59,7 +59,7 @@ groups=1000(demouser),27(sudo),110(lxd),999(docker)
 Instructions will be written assuming that the user is at the top level of the cloned directory.
 
 ```console
-git clone https://github.com/mjstealey/wordpress-nginx-docker.git
+git clone https://github.com/felixnyamweya/wordpress-nginx-docker.git
 cd wordpress-nginx-docker/
 ```
 
@@ -102,11 +102,11 @@ SSL_CERTS_DATA_DIR=./certs-data
 
 ### https using Let's Encrypt
 
-Create the `nginx/default.conf` file by copying the contents of `default_https.conf.template` and replacing **FQDN\_OR\_IP** with **mjstealey.com**
+Create the `nginx/default.conf` file by copying the contents of `default_https.conf.template` and replacing **FQDN\_OR\_IP** with **example.com**
 
 ```
 cp nginx/default_https.conf.template nginx/default.conf
-sed -i 's/FQDN_OR_IP/mjstealey.com/g' nginx/default.conf
+sed -i 's/FQDN_OR_IP/example.com/g' nginx/default.conf
 ```
 
 Updated `nginx/default.conf` file:
@@ -115,7 +115,7 @@ Updated `nginx/default.conf` file:
 server {
     listen      80;
     listen [::]:80;
-    server_name mjstealey.com;
+    server_name example.com;
 
     location / {
         rewrite ^ https://$host$request_uri? permanent;
@@ -130,7 +130,7 @@ server {
 server {
     listen      443           ssl http2;
     listen [::]:443           ssl http2;
-    server_name               mjstealey.com www.mjstealey.com;
+    server_name               example.com www.example.com;
 
     add_header                Strict-Transport-Security "max-age=31536000" always;
 
@@ -151,9 +151,9 @@ server {
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
 
-    ssl_certificate           /etc/letsencrypt/live/mjstealey.com/fullchain.pem;
-    ssl_certificate_key       /etc/letsencrypt/live/mjstealey.com/privkey.pem;
-    ssl_trusted_certificate   /etc/letsencrypt/live/mjstealey.com/chain.pem;
+    ssl_certificate           /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key       /etc/letsencrypt/live/example.com/privkey.pem;
+    ssl_trusted_certificate   /etc/letsencrypt/live/example.com/chain.pem;
 
     location / {
         try_files $uri $uri/ /index.php?$args;
@@ -206,7 +206,7 @@ Status: Downloaded newer image for certbot/certbot:latest
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator webroot, Installer None
 Enter email address (used for urgent renewal and security notices) (Enter 'c' to
-cancel): mjstealey@gmail.com
+cancel): me@felix.co.ke
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please read the Terms of Service at
@@ -225,17 +225,17 @@ encrypting the web, EFF news, campaigns, and ways to support digital freedom.
 (Y)es/(N)o: Y
 Obtaining a new certificate
 Performing the following challenges:
-http-01 challenge for mjstealey.com
-http-01 challenge for www.mjstealey.com
+http-01 challenge for example.com
+http-01 challenge for www.example.com
 Using the webroot path /data/letsencrypt for all unmatched domains.
 Waiting for verification...
 Cleaning up challenges
 
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
-   /etc/letsencrypt/live/mjstealey.com/fullchain.pem
+   /etc/letsencrypt/live/example.com/fullchain.pem
    Your key file has been saved at:
-   /etc/letsencrypt/live/mjstealey.com/privkey.pem
+   /etc/letsencrypt/live/example.com/privkey.pem
    Your cert will expire on 2019-05-07. To obtain a new or tweaked
    version of this certificate in the future, simply run certbot
    again. To non-interactively renew *all* of your certificates, run
@@ -258,14 +258,14 @@ Removing nginx     ... done
 Removing wordpress ... done
 Removing mysql     ... done
 INFO: update the nginx/default.conf file
--  4:   server_name mjstealey.com;
-- 19:   server_name               mjstealey.com www.mjstealey.com;
-- 40:   ssl_certificate           /etc/letsencrypt/live/mjstealey.com/fullchain.pem;
-- 41:   ssl_certificate_key       /etc/letsencrypt/live/mjstealey.com/privkey.pem;
-- 42:   ssl_trusted_certificate   /etc/letsencrypt/live/mjstealey.com/chain.pem;
+-  4:   server_name example.com;
+- 19:   server_name               example.com www.example.com;
+- 40:   ssl_certificate           /etc/letsencrypt/live/example.com/fullchain.pem;
+- 41:   ssl_certificate_key       /etc/letsencrypt/live/example.com/privkey.pem;
+- 42:   ssl_trusted_certificate   /etc/letsencrypt/live/example.com/chain.pem;
 ```
 
-### Deploy site mjstealey.com
+### Deploy site example.com
 
 At this point the site should be ready to deploy using the newly generated certificates
 
@@ -276,7 +276,7 @@ Creating wordpress ... done
 Creating nginx     ... done
 ```
 
-Allow a few moments for the containers to complete their setup process and go to: [https://mjstealey.com](https://mjstealey.com)
+Allow a few moments for the containers to complete their setup process and go to you url.
 
 Follow the prompts and setup the site.
 
