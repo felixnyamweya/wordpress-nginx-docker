@@ -24,7 +24,6 @@ This project is a docker compose installation of a single site WordPress instanc
 - [Stop and remove](#stop-and-remove) - clear all files associated with running the site
 - [Optional configuration](#opt-config) - additional options for deploying your site
 - [Debugging tips](#debug) - basic tips for debugging your site when something goes wrong
-- [Example deployment](MJSTEALEY.md) - full example deployment to [https://mjstealey.com/](https://mjstealey.com/)
 
 ## <a name="tldr"></a>TL;DR
 
@@ -233,7 +232,7 @@ Status: Downloaded newer image for certbot/certbot:latest
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator webroot, Installer None
 Enter email address (used for urgent renewal and security notices) (Enter 'c' to
-cancel): mjstealey@gmail.com
+cancel): me@felix.co.ke
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please read the Terms of Service at
@@ -252,17 +251,17 @@ encrypting the web, EFF news, campaigns, and ways to support digital freedom.
 (Y)es/(N)o: Y
 Obtaining a new certificate
 Performing the following challenges:
-http-01 challenge for mjstealey.com
-http-01 challenge for www.mjstealey.com
+http-01 challenge for example.com
+http-01 challenge for www.example.com
 Using the webroot path /data/letsencrypt for all unmatched domains.
 Waiting for verification...
 Cleaning up challenges
 
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
-   /etc/letsencrypt/live/mjstealey.com/fullchain.pem
+   /etc/letsencrypt/live/example.com/fullchain.pem
    Your key file has been saved at:
-   /etc/letsencrypt/live/mjstealey.com/privkey.pem
+   /etc/letsencrypt/live/example.com/privkey.pem
    Your cert will expire on 2019-05-07. To obtain a new or tweaked
    version of this certificate in the future, simply run certbot
    again. To non-interactively renew *all* of your certificates, run
@@ -285,11 +284,11 @@ Removing nginx     ... done
 Removing wordpress ... done
 Removing mysql     ... done
 INFO: update the nginx/default.conf file
--  4:   server_name mjstealey.com;
-- 19:   server_name               mjstealey.com www.mjstealey.com;
-- 40:   ssl_certificate           /etc/letsencrypt/live/mjstealey.com/fullchain.pem;
-- 41:   ssl_certificate_key       /etc/letsencrypt/live/mjstealey.com/privkey.pem;
-- 42:   ssl_trusted_certificate   /etc/letsencrypt/live/mjstealey.com/chain.pem;
+-  4:   server_name example.com;
+- 19:   server_name               example.com www.example.com;
+- 40:   ssl_certificate           /etc/letsencrypt/live/example.com/fullchain.pem;
+- 41:   ssl_certificate_key       /etc/letsencrypt/live/example.com/privkey.pem;
+- 42:   ssl_trusted_certificate   /etc/letsencrypt/live/example.com/chain.pem;
 ```
 
 ### Bring your own
@@ -332,14 +331,14 @@ INFO: running from top level of repository
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Processing /etc/letsencrypt/renewal/mjstealey.com.conf
+Processing /etc/letsencrypt/renewal/example.com.conf
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Cert not yet due for renewal
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 The following certs are not due for renewal yet:
-  /etc/letsencrypt/live/mjstealey.com/fullchain.pem expires on 2019-05-07 (skipped)
+  /etc/letsencrypt/live/example.com/fullchain.pem expires on 2019-05-07 (skipped)
 No renewals were attempted.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Killing nginx ... done
